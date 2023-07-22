@@ -3,13 +3,15 @@ import styles from './PodcastCrad.module.css';
 import Card from "../Card";
 import Image from "next/image";
 
-type PodcastCardProps = {
+
+export type Podcast = {
+  id: string;
   imageUrl: string;
   title: string;
   author: string;
 }
 
-const PodcastCard: React.FC<PodcastCardProps> = ({imageUrl, title, author}) => {
+const PodcastCard: React.FC<Podcast> = ({imageUrl, title, author}) => {
   return (
     <Link href="/">
           <article className={styles.podcast}>

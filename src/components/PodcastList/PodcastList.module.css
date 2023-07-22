@@ -1,0 +1,34 @@
+.podcastList {
+  padding: var(--padding-medium);
+}
+
+.podcastList table {
+  border-collapse: collapse; 
+}
+
+.podcastList td {
+  padding: var(--padding-small);
+}
+
+.podcastList__theaders th{
+  text-align: left;
+  padding: var(--padding-medium);
+}
+
+.podcastList__theaders :first-child {
+  width: 70%;
+}
+
+.showColors tr:nth-child(odd) {
+  background-color: var(--light-gray);
+}
+
+.showColors tr {  
+  border-bottom: 1px solid var(--dark-gray);
+  border-top: 1px solid var(--dark-gray);
+}
+
+.showColors td:first-child {
+  color: var(--blue-primary);
+  font-weight: 600;
+}
