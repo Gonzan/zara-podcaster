@@ -18,6 +18,7 @@ module.exports = {
       'react-hooks/rules-of-hooks': 'error',
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
+      'no-undef': "off"
     },
   };
   
