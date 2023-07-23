@@ -6,7 +6,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { podcastId } = req.query;
-  console.log("podcastId", req.query);
+
   
   if (typeof podcastId !== "string") {
     return res.status(400).json({ error: "Invalid podcastId" });
