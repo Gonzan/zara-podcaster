@@ -4,12 +4,12 @@ type BadgeTypes = "primary";
 
 type BadgeProps = {
   count: number;
-  type: BadgeTypes;
+  type?: BadgeTypes;
 };
 
 const Badge: React.FC<BadgeProps> = ({ type = "primary", count }) => (
   <mark
-    className={`${styles.badge} ${styles.badge}--${type}`}
+  className={`${styles.badge} ${styles['badge--primary']}`}
     data-testid="badge"
   >
     {count}

@@ -1,5 +1,7 @@
 .badge {
   border-radius: 5px;
+  color: white;
+  padding: 4px;
 }
 
 .badge--primary {

@@ -1,8 +1,13 @@
 import Head from 'next/head'
-import styles from '@/styles/Home.module.css'
 import Header from '@/components/Header'
+import { useQuery } from 'react-query';
+import FilterSection from '@/components/FilterSection';
+import Container from '@/components/Container';
+import { getPodcastsData } from '@/utils/getPodcasts';
 
-export default function Home() {
+export default function Home() {  
+  const { data } = useQuery('podcasts', getPodcastsData);
+
   return (
     <>
       <Head>
@@ -12,7 +17,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
+
       <main>
+        <Container>
+          {data && <FilterSection podcasts={data} />}
+        </Container>
       </main>
     </>
   )

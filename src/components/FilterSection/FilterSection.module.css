@@ -1,0 +1,21 @@
+.filterInput {
+  padding: 2px;
+}
+
+.podcastGrid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  grid-gap: calc(var(--padding-medium) * 2);
+  margin-top: 2rem;
+  padding: var(--padding-large);
+  row-gap: 5rem;
+}
+
+.search {
+  display: flex;
+  justify-content: right;
+  gap: 1rem;
+  margin-top: 1rem;
+}
