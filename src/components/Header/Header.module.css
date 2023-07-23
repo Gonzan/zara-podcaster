@@ -1,0 +1,4 @@
+.header {
+  background-color: var(--light-gray);
+  border-bottom: 1px solid var(--dark-gray);
+}

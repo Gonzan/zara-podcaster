@@ -1,0 +1,7 @@
+.badge {
+  border-radius: 5px;
+}
+
+.badge--primary {
+  background: var(--blue-primary);
+}
