@@ -1,8 +1,7 @@
 import Link from "next/link";
-import styles from './PodcastCrad.module.css';
+import styles from './PodcastCard.module.css';
 import Card from "../Card";
 import Image from "next/image";
-
 
 export type Podcast = {
   id: string;
@@ -12,8 +11,6 @@ export type Podcast = {
 }
 
 const PodcastCard: React.FC<Podcast> = ({id, imageUrl, title, author}) => {
-
-  
   return (
     <Link href= {`/podcast/${id}`}>
       <article className={styles.podcast}>
