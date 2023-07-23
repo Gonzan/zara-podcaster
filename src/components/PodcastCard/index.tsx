@@ -9,6 +9,8 @@ export type Podcast = {
   imageUrl: string;
   title: string;
   author: string;
+  description: string;
+  subtitle: string;
 }
 
 const PodcastCard: React.FC<Podcast> = ({imageUrl, title, author}) => {
