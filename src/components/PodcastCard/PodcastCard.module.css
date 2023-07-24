@@ -1,5 +1,6 @@
 .podcast{
   width: 230px;
+  cursor: pointer;
 }
 
 .podcast__container {

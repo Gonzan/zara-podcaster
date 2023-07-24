@@ -4,9 +4,10 @@ import { useQuery } from 'react-query';
 import FilterSection from '@/components/FilterSection';
 import Container from '@/components/Container';
 import { getPodcastsData } from '@/utils/getPodcasts';
+import Spin from '@/components/Spin';
 
 export default function Home() {  
-  const { data } = useQuery('podcasts', getPodcastsData);
+  const { data, isLoading } = useQuery('podcasts', getPodcastsData);
 
   return (
     <>
@@ -16,10 +17,12 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      
       <Header />
 
       <main>
         <Container>
+          {isLoading && <Spin />}
           {data && <FilterSection podcasts={data} />}
         </Container>
       </main>

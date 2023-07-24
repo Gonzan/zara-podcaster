@@ -1,4 +1,5 @@
 .logo__title {
   color: var(--blue-primary);
   display: inline-block;
+  cursor: pointer;
 }

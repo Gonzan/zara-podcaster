@@ -1,0 +1,10 @@
+.grid {
+  display: flex;
+  padding: 40px;
+  gap: 40px;
+}
+
+.aside {
+  width: 200px;
+  height: 400px;
+}

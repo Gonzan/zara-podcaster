@@ -11,9 +11,12 @@
   height: 64px;
   margin: 8px;
   border-radius: 50%;
-  border: 6px solid #fff;
-  border-color: #fff transparent #fff transparent;
+  border: 6px solid var(--blue-primary);
+  border-color: var(--blue-primary) transparent var(--blue-primary) transparent;
   animation: spin 1.2s linear infinite;
+  position: absolute;
+  left: 50%;
+  top: 50%;
 }
 
 @keyframes spin {
