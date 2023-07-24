@@ -1,10 +1,8 @@
 import styles from './PodcastList.module.css';
 import Link from 'next/link';
-import { Podcast } from '../PodcastCard';
-
 interface PodcastListProps {
   episodes: Episode[];
-  podcast: Podcast;
+  podcastId: string;
 }
 
 type Episode = {
@@ -14,10 +12,10 @@ type Episode = {
   duration: string;
 }
 
-const PodcastList: React.FC<PodcastListProps> = ({ episodes, podcast }) => {
+const PodcastList: React.FC<PodcastListProps> = ({ episodes, podcastId }) => {  
   return (
-      <div className={styles.podcastList} data-testid="podcastList">
-        <table width='100%'>
+    <div className={styles.podcastList} data-testid="podcastList">
+      <table width='100%'>
         <thead>
           <tr className={styles.podcastList__theaders}>
             <th>Title</th>
@@ -28,13 +26,16 @@ const PodcastList: React.FC<PodcastListProps> = ({ episodes, podcast }) => {
 
         <tbody className={styles.showColors}>
           {
-            episodes.map((episode) => {
+            episodes?.map((episode) => {
               return (
                 <tr key={episode.title}>
                   <td>
-                    <Link href={`/podcast/${podcast.id}/episode/${episode.id}`}>
-                      {episode.title}
-                    </Link>
+                  <Link
+                    href={`/podcast/${podcastId}/episode/${episode.id}`}
+                  >
+                  {episode.title}
+                  </Link>
+                  
                   </td>
                   <td>
                     {episode.date}
@@ -48,7 +49,7 @@ const PodcastList: React.FC<PodcastListProps> = ({ episodes, podcast }) => {
           }
         </tbody>
       </table>
-      </div>
+    </div>
   );
 }
 

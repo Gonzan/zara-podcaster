@@ -1,16 +1,15 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import PodcastList from '../index';
-import { podcastEpisodesMock, podcastMock } from '../../../test/mock';
+import { podcastEpisodesMock } from '../../../test/mock';
 
 describe('PodcastList', () => {
   test('renders the table headers and episode data', () => {
-    render(<PodcastList episodes={podcastEpisodesMock} podcast={podcastMock} />);
+    render(<PodcastList episodes={podcastEpisodesMock} podcastId="1" />);
 
     expect(screen.getByText('Title')).toBeInTheDocument();
     expect(screen.getByText('Date')).toBeInTheDocument();
     expect(screen.getByText('Duration')).toBeInTheDocument();
-
 
     podcastEpisodesMock.forEach((episode) => {
       expect(screen.getByText(episode.title)).toBeInTheDocument();
@@ -20,13 +19,12 @@ describe('PodcastList', () => {
   });
 
   test('renders the episode links with correct routes', () => {
-    render(<PodcastList episodes={podcastEpisodesMock} podcast={podcastMock} />);
-
+    render(<PodcastList episodes={podcastEpisodesMock} podcastId="1" />);
+    const podcastId = '1';
+    
     podcastEpisodesMock.forEach((episode) => {
-      const podcast = podcastMock;
-
       const episodeLink = screen.getByText(episode.title);
-      expect(episodeLink).toHaveAttribute('href', `/podcast/${podcast.id}/episode/${episode.id}`);
+      expect(episodeLink).toHaveAttribute('href', `/podcast/${podcastId}/episode/${episode.id}`);
     });
   });
 });

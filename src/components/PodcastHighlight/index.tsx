@@ -2,21 +2,22 @@ import Image from "next/image";
 import Divider  from "../Divider";
 import Description from "../Description";
 import Card from "../Card";
+import styles from "./PodcastHighlight.module.css";
 
 type PodcastHighlightProps = {
-  imageUrl: string;
-  descriptions: DescriptionProps[];
-}
-
-type DescriptionProps = {
+  id: string;
   title?: string;
-  subtitle?: string;
-  text: string;
+  summary: string;
+  imageUrl: string;
+  author: string;
 }
 
 const PodcastHighlight: React.FC<PodcastHighlightProps> = ({
   imageUrl,
-  descriptions,
+  summary,
+  author,
+  id,
+  title,
 }) => {
   return (
     <Card data-testid="podcast-highlight">
@@ -26,18 +27,24 @@ const PodcastHighlight: React.FC<PodcastHighlightProps> = ({
         width={500}
         height={500}
         data-testid="podcast-image"
+        className={styles.image}
       />
       <Divider data-testid="divider-1" />
-      {descriptions.map((description) => (
+      <div className={styles.author}>
         <Description
-          key={description.title}
-          title={description.title}
-          subtitle={description.subtitle}
-          description={description.text}
-          data-testid="podcast-description"
+          key={id}
+          title={title}
+          description={"By "+ author}
         />
-      ))  
-      }
+      </div>
+      
+      {summary && (
+        <Description
+          key={id}
+          subtitle="Descrtiption"
+          description={summary.split('.')[0]  + '.'}
+        /> 
+      )}
     </Card>
   );
 };

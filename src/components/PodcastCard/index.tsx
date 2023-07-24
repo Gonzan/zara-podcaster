@@ -12,7 +12,7 @@ export type Podcast = {
 
 const PodcastCard: React.FC<Podcast> = ({id, imageUrl, title, author}) => {
   return (
-    <Link href= {`/podcast/${id}`}>
+    <Link href= {`/podcast/${String(id)}`}>
       <article className={styles.podcast}>
         <Card>
           <div className={styles.podcast__container}>

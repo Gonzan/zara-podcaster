@@ -1,4 +1,5 @@
 export interface Podcast {
+  [x: string]: any;
   "im:name": PodcastName;
   "im:image": PodcastImage[];
   "im:price": PodcastPrice;
@@ -75,6 +76,7 @@ export type SanitizedPodcastsProps = {
   imageUrl: string;
   title: string;
   author: string;
+  summary: string;
 };
 
 export type SanitizedPodcasts = SanitizedPodcastsProps[];
