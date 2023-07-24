@@ -1,33 +1,27 @@
 import { useState } from "react";
-import { sanitizePodcastEpisodeList } from "../../utils/sanitizePodcastEpisodeList";
-import { PodcastList, SanitizedPodcasts, SanitizedPodcastsProps } from "./types";
+import { SanitizedPodcasts } from "./types";
 import styles from "./FilterSection.module.css";
 import PodcastCard from "../PodcastCard";
 import Badge from "../Badge";
+import { filteredPodcasts } from "@/utils/sanitizePodcastEpisodeList";
 
 type FilterSectionProps = {
-  podcasts: PodcastList;
+  podcasts: SanitizedPodcasts;
 };
 
 const FilterSection = ({podcasts}: FilterSectionProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   
-  const sanitizedData: SanitizedPodcasts = sanitizePodcastEpisodeList(podcasts);
-
-  const filteredPodcasts = sanitizedData.filter(
-    (podcast: SanitizedPodcastsProps) =>
-      podcast.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      podcast.author?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-  
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
+  const filteredPodcastsList = filteredPodcasts(podcasts, searchTerm);
+  
   return (
     <div>
       <section className={styles.search}>
-        <Badge count={filteredPodcasts.length} />
+        <Badge count={filteredPodcastsList.length} />
         
         <input
           type="text"
@@ -40,7 +34,7 @@ const FilterSection = ({podcasts}: FilterSectionProps) => {
       </section>
 
       <ul className={styles.podcastGrid} >
-        {filteredPodcasts.map((podcast) => (
+        {filteredPodcastsList.map((podcast) => (
           <li key={podcast.id} data-testid="podcast-card">
             <PodcastCard {...podcast} />
           </li>

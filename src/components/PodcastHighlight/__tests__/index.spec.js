@@ -1,26 +1,29 @@
-import { render, screen } from '@testing-library/react';
-import PodcastHighlight from '../index';
-import { PodcastHighlightMock } from '../../../test/mock';
+import { render, screen } from "@testing-library/react";
+import PodcastHighlight from "../index";
+import { podcastHighlightMock } from "../../../test/mock";
 
-describe('PodcastHighlight', () => {
-  test('renders the podcast highlight correctly', () => {
-    render(<PodcastHighlight {...PodcastHighlightMock} />);
+test("should render the podcast highlight without title", () => {
+  const { imageUrl, author, summary } = podcastHighlightMock;
+  render(<PodcastHighlight imageUrl={imageUrl} author={author} summary={summary} />);
 
-    const podcastImage = screen.getByTestId('podcast-image');
-    expect(podcastImage).toBeInTheDocument();
-    expect(podcastImage).toHaveAttribute('src', expect.stringContaining('mza_16091018887573148747.jpg'));
+  const podcastAuthor = screen.getByText(`By ${podcastHighlightMock.author}`);
+  expect(podcastAuthor).toBeInTheDocument();
 
-    PodcastHighlightMock.descriptions.forEach((description) => {
-      const descriptionTitle = screen.getByText(description.title);
-      expect(descriptionTitle).toBeInTheDocument();
+  const podcastTitle = screen.queryByText(podcastHighlightMock.title);
+  expect(podcastTitle).not.toBeInTheDocument();
+});
 
-      if (description.subtitle) {
-        const descriptionSubtitle = screen.getByText(description.subtitle);
-        expect(descriptionSubtitle).toBeInTheDocument();
-      }
+test("should render the podcast highlight without summary", () => {
+  const { imageUrl, title, author } = podcastHighlightMock;
+  render(<PodcastHighlight imageUrl={imageUrl} title={title} author={author} />);
 
-      const descriptionText = screen.getByText(description.text);
-      expect(descriptionText).toBeInTheDocument();
-    });
-  });
+  const podcastImage = screen.getByTestId("podcast-image");
+  expect(podcastImage).toBeInTheDocument();
+  expect(podcastImage).toHaveAttribute("alt", "podcast image");
+
+  const podcastAuthor = screen.getByText(`By ${podcastHighlightMock.author}`);
+  expect(podcastAuthor).toBeInTheDocument();
+
+  const podcastSummary = screen.queryByText(podcastHighlightMock.summary);
+  expect(podcastSummary).not.toBeInTheDocument();
 });
