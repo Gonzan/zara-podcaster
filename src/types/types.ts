@@ -68,4 +68,4 @@ export interface Podcast {
 
 export type PodcastList = Podcast[];
 
-type Label = string
+type Label=string
