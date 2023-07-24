@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Divider  from "../Divider";
+import Divider from "../Divider";
 import Description from "../Description";
 import Card from "../Card";
 import styles from "./PodcastHighlight.module.css";
@@ -11,7 +11,7 @@ type PodcastHighlightProps = {
   summary: string;
   imageUrl: string;
   author: string;
-}
+};
 
 const PodcastHighlight: React.FC<PodcastHighlightProps> = ({
   imageUrl,
@@ -21,34 +21,38 @@ const PodcastHighlight: React.FC<PodcastHighlightProps> = ({
   title,
 }) => {
   return (
-    <Card data-testid="podcast-highlight">
-      <Link href={`/podcast/${id}`} >
-        <Image
-          src={imageUrl}
-          alt='podcast image'
-          width={500}
-          height={500}
-          data-testid="podcast-image"
-          className={styles.image}
-        />
-      </Link>
-      <Divider data-testid="divider-1" />
-      <div className={styles.author}>
-        <Link href={`/podcast/${id}`} >
-          <Description
-            key={id}
-            title={title}
-            description={"By "+ author}
+    <Card data-testid="podcast-highlight" className={styles.card}>
+      <Link href={`/podcast/${id}`}>
+        <figure className={styles.wrapperImage}>
+          <Image
+            src={imageUrl}
+            alt="podcast image"
+            width={500}
+            height={500}
+            data-testid="podcast-image"
+            className={styles.image}
           />
+        </figure>
+      </Link>
+
+      <Divider data-testid="divider-1" />
+
+      <div className={styles.author}>
+        <Link href={`/podcast/${id}`}>
+          <Description key={id} title={title} description={"By " + author} />
         </Link>
       </div>
-      
+
+      <Divider data-testid="divider-2" />
+
       {summary && (
-        <Description
-          key={id}
-          subtitle="Descrtiption"
-          description={summary.split('.')[0]  + '.'}
-        /> 
+        <div className={styles.description}>
+          <Description
+            key={id}
+            subtitle="Descrtiption"
+            description={summary.split(".")[0] + "."}
+          />
+        </div>
       )}
     </Card>
   );

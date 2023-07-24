@@ -6,3 +6,7 @@
   margin-top: 2rem;
   padding: var(--padding-medium);
 }
+
+.main {
+  padding: 40px 0 40px;
+}

@@ -5,3 +5,15 @@
 .image {
   border-radius: 5%;
 }
+
+.wrapperImage {
+  margin-bottom: 20px;
+}
+
+.card {
+  width: 300px;
+}
+
+.description {
+  margin-top: 20px;
+}

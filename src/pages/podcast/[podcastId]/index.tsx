@@ -28,23 +28,22 @@ export default function Detail() {
       
       <Header />
 
-      <main>
+      <main className={styles.main}>
         <Container>
           <div className={styles.grid}>
             <aside className={styles.aside}>
-              <Card>
-                <PodcastHighlight
-                  {...podcastDetails}
-                />
-              </Card>
+              <PodcastHighlight
+                {...podcastDetails}
+              />
             </aside>
+            
             <section className={styles.content}>
-              <div className={styles.counter}>
+              <Card className={styles.counter}>
                 Episodes: {data?.episodes?.length}
-              </div>
-              <div className={styles.list}>
+              </Card>
+              <Card className={styles.list}>
                 {data && <PodcastList episodes={data.episodes} podcastId={String(podcastId)} />}
-              </div>
+              </Card>
             </section>
           </div>
         </Container>

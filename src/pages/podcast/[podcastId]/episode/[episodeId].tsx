@@ -29,16 +29,15 @@ export default function Episode() {
       
       <Header />
 
-      <main>
-      <Container>
+      <main className={styles.main}>
+        <Container>
           <div className={styles.grid}>
-            <aside className={styles.aside}>
-              <Card>
+            <aside>
                 <PodcastHighlight
                   {...podcastDetails}
                 />
-              </Card>
             </aside>
+
             <section className={styles.content}>
               {isSuccess && (
               <EpisodeCard
