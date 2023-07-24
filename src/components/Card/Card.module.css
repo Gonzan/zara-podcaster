@@ -1,3 +1,4 @@
 .card {
   box-shadow: var(--box-shadow-primary);
+  padding:20px;
 }
