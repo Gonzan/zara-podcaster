@@ -64,15 +64,20 @@ const getPodcastIdsFromLocalStorage = () => {
 };
 
 
-export const sanitizeData = (data: any) => data.map((podcast: any) => {
-  const id = podcast.trackId;
-  const title = podcast.trackName;
-  const date = new Date(podcast.releaseDate).toLocaleDateString();
-  const durationInSeconds = podcast.trackTimeMillis / 1000;
-  const duration = `${Math.floor(durationInSeconds / 60)}:${(durationInSeconds % 60).toString().padStart(2, '0')}`;
+export const sanitizeData = (data: any) => {
+  data.shift()
 
-  return { id, title, date, duration };
-});
+  return data.map((podcast: any) => {
+    const id = podcast.trackId;
+    const title = podcast.trackName;
+    const date = new Date(podcast.releaseDate).toLocaleDateString();
+    const durationInSeconds = podcast.trackTimeMillis / 1000;
+    const duration = `${Math.floor(durationInSeconds / 60)}:${(durationInSeconds % 60).toString().padStart(2, '0')}`;
+    const episodeUrl = podcast.episodeUrl;
+    
+    return { id, title, date, duration, episodeUrl};
+  });
+};
 
 
 
@@ -93,7 +98,7 @@ export const getPodcastListById = async (id: string) => {
   }
 
   const response = await fetchPodcasts(`/api/detailPodcast?podcastId=${id}`);
-
+  
   const sanitizedResponse = sanitizeData(response);
 
   if (podcastIdIndex !== -1) {

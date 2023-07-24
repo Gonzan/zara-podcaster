@@ -3,6 +3,7 @@ import Divider  from "../Divider";
 import Description from "../Description";
 import Card from "../Card";
 import styles from "./PodcastHighlight.module.css";
+import Link from "next/link";
 
 type PodcastHighlightProps = {
   id: string;
@@ -21,21 +22,25 @@ const PodcastHighlight: React.FC<PodcastHighlightProps> = ({
 }) => {
   return (
     <Card data-testid="podcast-highlight">
-      <Image
-        src={imageUrl}
-        alt='podcast image'
-        width={500}
-        height={500}
-        data-testid="podcast-image"
-        className={styles.image}
-      />
+      <Link href={`/podcast/${id}`} >
+        <Image
+          src={imageUrl}
+          alt='podcast image'
+          width={500}
+          height={500}
+          data-testid="podcast-image"
+          className={styles.image}
+        />
+      </Link>
       <Divider data-testid="divider-1" />
       <div className={styles.author}>
-        <Description
-          key={id}
-          title={title}
-          description={"By "+ author}
-        />
+        <Link href={`/podcast/${id}`} >
+          <Description
+            key={id}
+            title={title}
+            description={"By "+ author}
+          />
+        </Link>
       </div>
       
       {summary && (

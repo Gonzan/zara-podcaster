@@ -11,11 +11,11 @@ import { getPodcastListById, getPodcastDetail } from '@/utils/getPodcasts';
 
 export default function Detail() {  
   const router = useRouter();
-  const { id } = router.query;
-  const { data } = useQuery('episodes', () => getPodcastListById(String(id)));
+  const { podcastId } = router.query;
+  const { data } = useQuery('episodes', () => getPodcastListById(String(podcastId)));
 
   const { data: podcastDetails, isLoading: isLoadingPodcastDetails } = useQuery(
-  ['podcastDetails', id], () => getPodcastDetail(id as string));
+  ['podcastDetails', podcastId], () => getPodcastDetail(podcastId as string));
 
   return (
     <>
@@ -43,7 +43,7 @@ export default function Detail() {
                 Episodes: {data?.episodes?.length}
               </div>
               <div className={styles.list}>
-                {data && <PodcastList episodes={data.episodes} podcastId={String(id)} />}
+                {data && <PodcastList episodes={data.episodes} podcastId={String(podcastId)} />}
               </div>
             </section>
           </div>
