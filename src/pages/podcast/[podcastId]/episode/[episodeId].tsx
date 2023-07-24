@@ -21,7 +21,7 @@ export default function Episode() {
   return (
     <>
       <Head>
-        <title>Create Next App</title>
+        <title>Epidsode Detail</title>
         <meta name="description" content="Podcast" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -29,16 +29,15 @@ export default function Episode() {
       
       <Header />
 
-      <main>
-      <Container>
+      <main className={styles.main}>
+        <Container>
           <div className={styles.grid}>
-            <aside className={styles.aside}>
-              <Card>
+            <aside>
                 <PodcastHighlight
                   {...podcastDetails}
                 />
-              </Card>
             </aside>
+
             <section className={styles.content}>
               {isSuccess && (
               <EpisodeCard
