@@ -27,6 +27,6 @@ export default function Home() {
           {data && <FilterSection podcasts={data} />}
         </Container>
       </main>
-    </>
-  );
+    </>
+  );
 }
