@@ -5,7 +5,7 @@ module.exports = {
       node: true,
       es2021: true,
     },
-    extends: ['eslint:recommended', 'plugin:react/recommended'],
+    extends: ['eslint:recommended', 'plugin:react/recommended', 'next'],
     parserOptions: {
       ecmaVersion: 12,
       sourceType: 'module',
@@ -18,7 +18,11 @@ module.exports = {
       'react-hooks/rules-of-hooks': 'error',
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
-      'no-undef': "off"
+      'no-undef': "off",
+      "react/no-unescaped-entities": "off",
+      "@next/next/no-page-custom-font": "off",
+      "no-unused-vars": 'off',
+
     },
   };
   

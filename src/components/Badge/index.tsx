@@ -7,7 +7,7 @@ type BadgeProps = {
   type?: BadgeTypes;
 };
 
-const Badge: React.FC<BadgeProps> = ({ type = "primary", count }) => (
+const Badge: React.FC<BadgeProps> = ({ count }) => (
   <mark
   className={`${styles.badge} ${styles['badge--primary']}`}
     data-testid="badge"
