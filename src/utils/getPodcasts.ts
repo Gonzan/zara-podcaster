@@ -1,6 +1,15 @@
 import { SanitizedPodcasts } from "@/components/FilterSection/types";
 import { sanitizePodcastEpisodeList } from "./sanitizePodcastEpisodeList";
 
+const hasPassed24Hours = (lastVisited: Date): boolean => {
+  const twentyFourHours = 24 * 60 * 60 * 1000; 
+  const currentTime = new Date().getTime();
+  const lastVisitedTime = new Date(lastVisited).getTime();
+  const timeDifference = currentTime - lastVisitedTime;
+
+  return timeDifference >= twentyFourHours;
+};
+
 export const fetchPodcasts = async (url: string) => {
   try {
     const response = await fetch(url);
@@ -20,7 +29,7 @@ export const fetchPodcasts = async (url: string) => {
 
 export const savePodcastsToLocalStorage = (podcasts: any, key: string) => {
   const currentDate = new Date().toISOString();
-  localStorage.setItem(key, JSON.stringify({ data: podcasts, lastUpdated: currentDate }));
+  localStorage.setItem(key, JSON.stringify({ data: [...podcasts], lastUpdated: currentDate }));
 };
 
 export const getPodcastsFromLocalStorage = (key: string) => {
@@ -40,11 +49,7 @@ export const getPodcastDetail = async (id: string) => {
 export const getPodcastsData = async () => {
   const cachedPodcasts = getPodcastsFromLocalStorage('podcasts');
   if (cachedPodcasts && cachedPodcasts.lastUpdated) {
-    const lastUpdated = new Date(cachedPodcasts.lastUpdated);
-    const currentDate = new Date();
-    const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
-
-    if (currentDate.getTime() - lastUpdated.getTime() < oneDayInMilliseconds) {
+    if (!hasPassed24Hours(new Date(cachedPodcasts.lastUpdated))) {    
       return cachedPodcasts.data;
     }
   }
@@ -52,15 +57,6 @@ export const getPodcastsData = async () => {
   const response = await fetchPodcasts('/api/popularPodcast');
   savePodcastsToLocalStorage(sanitizePodcastEpisodeList(response), 'podcasts');
   return sanitizePodcastEpisodeList(response);
-};
-
-const savePodcastIdsToLocalStorage = (ids: string[]) => {
-  localStorage.setItem('podcastIds', JSON.stringify(ids));
-};
-
-const getPodcastIdsFromLocalStorage = () => {
-  const localStorageIds = localStorage.getItem('podcastIds');
-  return localStorageIds ? JSON.parse(localStorageIds) : [];
 };
 
 
@@ -79,44 +75,59 @@ export const sanitizeData = (data: any) => {
   });
 };
 
-
-
 export const getPodcastListById = async (id: string) => {
+
+  const saveEpisodes = (episodes: any, key: string) => {
+    const old =  getPodcastsFromLocalStorage('episodes') || [];
+    localStorage.setItem(key, JSON.stringify([...old, ...episodes]));
+  };
+
+
   const cachedEpisodeList = getPodcastsFromLocalStorage('episodes');
-  const cachedPodcastIds = getPodcastIdsFromLocalStorage();
+  
+  if (!cachedEpisodeList) {
+    const response = await fetchPodcasts(`/api/detailPodcast?podcastId=${id}`);
 
-  const podcastIdIndex = cachedPodcastIds.findIndex((item: { id: string; }) => item.id === id);
+    const sanitizedData = sanitizeData(response);
 
-  if (podcastIdIndex !== -1) {
-    const cachedPodcastIdTimestamp = new Date(cachedPodcastIds[podcastIdIndex].timestamp);
-    const currentDate = new Date();
-    const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+    saveEpisodes([{
+      episodes:sanitizedData,
+      id,
+      lastUpdated: new Date().toISOString(),
+    }], 'episodes');
+    
+    return sanitizedData;
 
-    if (currentDate.getTime() - cachedPodcastIdTimestamp.getTime() < oneDayInMilliseconds) {
-      return cachedEpisodeList?.data;
+  }else{
+    const podcast = cachedEpisodeList.find((podcast: any) => podcast.id === id);
+
+    if(!podcast) {
+      const response = await fetchPodcasts(`/api/detailPodcast?podcastId=${id}`);
+      const sanitizedData = sanitizeData(response);
+    
+      saveEpisodes([{
+        episodes:sanitizedData,
+        id,
+        lastUpdated: new Date().toISOString(),
+      }], 'episodes');
+    
+      return sanitizedData;
+    } else { 
+      if(hasPassed24Hours(new Date(podcast.lastUpdated))) {
+        const response = await fetchPodcasts(`/api/detailPodcast?podcastId=${id}`);
+        const sanitizedData = sanitizeData(response);
+
+        saveEpisodes([{
+          episodes:sanitizedData,
+          id,
+          lastUpdated: new Date().toISOString(),
+        }], 'episodes');
+
+        return sanitizedData;
+      }
+
+      return podcast;
     }
   }
 
-  const response = await fetchPodcasts(`/api/detailPodcast?podcastId=${id}`);
-  
-  const sanitizedResponse = sanitizeData(response);
-
-  if (podcastIdIndex !== -1) {
-    cachedPodcastIds[podcastIdIndex].timestamp = new Date();
-  } else {
-    cachedPodcastIds.push({ id, timestamp: new Date() });
-  }
-  savePodcastIdsToLocalStorage(cachedPodcastIds);
-
-  savePodcastsToLocalStorage(
-    {
-      episodes: [...sanitizedResponse]
-    },
-    'episodes'
-  );
-
-  return {
-    episodes: sanitizedResponse,
-  };
 };
-
