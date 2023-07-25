@@ -9,6 +9,7 @@ Technical test frontend for Zara.
 - [Development Mode](#development-Mode)
 - [production Mode](#production-Mode)
 - [alternate mode](#alternate-mode)
+- [TEST](#TEST)
 - [Technologies](#Technologies)
 - [Autor](#autor)
 
@@ -34,7 +35,7 @@ git clone https://github.com/Gonzan/zara-podcaster.git
 npm install
 ```
 
-2. Lifting the application madly
+2. Lifting the application
 
 ```js
 npm run dev
@@ -60,6 +61,20 @@ npm run start
 
 Modify the SCOPE variable in the .env file that already exists in the repo For practical purposes for this exercise, any value other than production is taken as development mode.
 
+# TEST
+
+To run the unit tests use the command.
+
+```js
+npm run start
+```
+
+To run the tests e2e use the npm tun dev command to run the application, then :
+
+```js
+npm run test:e2e
+```
+after that push the play button.
 ## Tecnologies
 
 | `Framework`                                                                                                                                                                                                        | `Typed`                                                                                                                  |  `Tests unitarios`                                                                                                                  |
